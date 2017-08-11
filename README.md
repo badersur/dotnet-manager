@@ -1,38 +1,38 @@
 # dotnet-manager (dnm) [![Build Status](https://travis-ci.org/badersur/dotnet-manager.svg?branch=master)](https://travis-ci.org/badersur/dotnet-manager)
 
-A script to download and update dotnet-sdk for Linux.
+A shell script to download and update [the latest version of .NET Core SDK for Linux][sdk].
+Please note that there's [an offical script][script] with several options but
+[it doesn't satisfy my needs][comment].
 
 
 ## Usage
 
-### One-liner
+There're 2 options:
 
-1. Open the terminal.
+1. Open the terminal and run the script:
+    ```bash
+    curl https://raw.githubusercontent.com/badersur/dotnet-manager/master/dnm.sh | bash
+    ```
 
-2. Run the script:
- ```bash
- curl https://raw.githubusercontent.com/badersur/dotnet-manager/master/dnm.sh | bash
- ```
+2. Clone/Download the repo and run the script:
 
-### Clone/Download the repo and run the script
+    1. Open the terminal.
 
-1. Open the terminal.
+    2. Clone the repo using [git](https://git-scm.com/downloads) or 
+    [download it](https://github.com/badersur/dotnet-manager/archive/master.zip):
+        ```bash
+        git clone https://github.com/badersur/dotnet-manager
+        ```
 
-2. Clone the repo using [git](https://git-scm.com/downloads) or 
- [download it](https://github.com/badersur/dotnet-manager/archive/master.zip):
- ```bash
- git clone https://github.com/badersur/dotnet-manager
- ```
+    3. Change your current directory to repo's directory:
+        ```bash
+        cd dotnet-manager
+        ```
 
-3. Change your current directory to repo's directory:
- ```bash
- cd dotnet-manager
- ```
-
-4. Execute the script `dnm.sh`:
- ```bash
- ./dnm.sh
- ```
+    4. Execute the script `dnm.sh`:
+        ```bash
+        ./dnm.sh
+        ```
 
 
 ## Issues & PRs?
@@ -55,3 +55,10 @@ Yes, please! You're more than welcome :)
 ## License
 
 MIT © [Bader Nasser Al-Hashmi](https://github.com/BaderSur)
+
+
+[sdk]: https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-linux-x64.tar.gz
+
+[script]: https://github.com/dotnet/cli/blob/master/scripts/obtain/dotnet-install.sh
+
+[comment]: https://github.com/dotnet/cli/issues/7361#issuecomment-320956280
