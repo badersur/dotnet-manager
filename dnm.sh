@@ -48,18 +48,18 @@ function extract_sdk() {
     echo "Extracting to ${bold}${app_dir_fullpath}${normal}..."
     mkdir -p "$app_dir"
     tar -xf "$sdk_fileame" -C "$app_dir"
-    echo "SDK is ready to embrace your code! Let's build awesome things ;)"
+    echo ".NET SDK is ready to embrace your code! Let's build awesome things ;)"
 }
 
 function download_sdk() {
-    rm -rf $sdk_fileame
+    rm -rf "$sdk_fileame"
     echo "Downloading ${sdk_fileame} ${bold}(${latest_version})${normal} to ${bold}${download_dir}${normal}..."
     if [[ -n $TRAVIS ]]; then
         wget -q -m --no-directories $sdk_download_url
     else
         wget -q -m --no-directories --show-progress $sdk_download_url
     fi
-    echo "SDK downloaded!"
+    echo ".NET SDK has been downloaded!"
 }
 
 function add_sdk_to_path() {
@@ -67,7 +67,7 @@ function add_sdk_to_path() {
     # shellcheck disable=SC2016,SC2089
     export_statement='export PATH="$PATH:'"$app_dir_fullpath"'"'
 
-    if ! grep -q "$export_statement" ~/.bashrc; then
+    if ! grep -q "^$export_statement" ~/.bashrc; then
         {
             echo
             echo "# The following export statement has been added by .net-manager!"
@@ -86,14 +86,14 @@ if [[ "$current_version" == "$latest_version" ]]; then
     echo "You've the latest version! ${bold}(${latest_version})${normal}"
 else
     if is_sdk_hash_valid; then
-        echo "Older SDK found with identical server's hash value."
+        echo "Older .NET SDK has been found with identical server's hash value."
         extract_sdk
     else
         download_sdk
         if is_sdk_hash_valid; then
             extract_sdk
         else
-            echo "Abort extracting because SDK hash isn't valid!!"
+            echo ".NET SDK ${bold}won't${normal} be extracted because of its invalid hash value!"
             exit 1
         fi
     fi
