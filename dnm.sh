@@ -21,9 +21,14 @@ app="${app_dir}/dotnet"
 
 sdk_fileame="dotnet-sdk-latest-linux-x64.tar.gz"
 
-latest_version_url="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/latest.version"
-sdk_download_url="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-linux-x64.tar.gz"
-sdk_hash_url="https://dotnetclichecksums.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-linux-x64.tar.gz.sha"
+download_version="release/2.0.0"
+if [[ -n $1 ]] && echo "$1" | grep -iq "pre"; then
+    download_version="master"
+fi
+
+latest_version_url="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/${download_version}/latest.version"
+sdk_download_url="https://dotnetcli.blob.core.windows.net/dotnet/Sdk/${download_version}/dotnet-sdk-latest-linux-x64.tar.gz"
+sdk_hash_url="https://dotnetclichecksums.blob.core.windows.net/dotnet/Sdk/${download_version}/dotnet-sdk-latest-linux-x64.tar.gz.sha"
 
 current_version=$($app --version 2> /dev/null | head)
 latest_version=$(curl $latest_version_url 2> /dev/null | tail -n 1 | sed 's/\r$//')
@@ -45,6 +50,7 @@ function is_sdk_hash_valid() {
 }
 
 function extract_sdk() {
+    # rm -rf "$app_dir"
     echo "Extracting to ${bold}${app_dir_fullpath}${normal}..."
     mkdir -p "$app_dir"
     tar -xf "$sdk_fileame" -C "$app_dir"
@@ -52,7 +58,7 @@ function extract_sdk() {
 }
 
 function download_sdk() {
-    rm -rf "$sdk_fileame"
+    mv "$sdk_fileame" "${sdk_fileame}.old"
     echo "Downloading ${sdk_fileame} ${bold}(${latest_version})${normal} to ${bold}${download_dir}${normal}..."
     if [[ -n $TRAVIS ]]; then
         wget -q -m --no-directories $sdk_download_url
@@ -65,7 +71,7 @@ function download_sdk() {
 function add_sdk_to_path() {
     cp ~/.bashrc ~/.bashrc.net-manager.backup
     # shellcheck disable=SC2016,SC2089
-    export_statement='export PATH="$PATH:'"$app_dir_fullpath"'"'
+    export_statement='export PATH="'"$app_dir_fullpath"':$PATH"'
 
     if ! grep -q "^$export_statement" ~/.bashrc; then
         {
