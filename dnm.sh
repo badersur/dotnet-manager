@@ -58,7 +58,12 @@ function extract_sdk() {
 }
 
 function download_sdk() {
-    mv "$sdk_fileame" "${sdk_fileame}.old"
+    if [ -f "$sdk_fileame" ]
+    then
+        echo "Backing up old sdk to ${sdk_fileame}.old"
+        mv "$sdk_fileame" "${sdk_fileame}.old"
+    fi
+    
     echo "Downloading ${sdk_fileame} ${bold}(${latest_version})${normal} to ${bold}${download_dir}${normal}..."
     if [[ -n $TRAVIS ]]; then
         wget -q -m --no-directories $sdk_download_url
