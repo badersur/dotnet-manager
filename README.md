@@ -1,8 +1,11 @@
 # dotnet-manager (dnm) [![Build Status](https://travis-ci.org/badersur/dotnet-manager.svg?branch=master)](https://travis-ci.org/badersur/dotnet-manager)
 
-A shell script to download and update [the latest version of .NET Core SDK for Linux][sdk].
+A shell script to download and update [the latest Servicing Release][servicing] of [.NET Core 2.0 SDK for Linux][sdk].
 Please note that there's [an offical script][script] with several options but
 [it doesn't satisfy my needs][comment].
+
+Pass `pre` to the script to install the [latest **preview release**][pre] (i.e. `./dnm.sh pre` or
+`curl https://raw.githubusercontent.com/badersur/dotnet-manager/master/dnm.sh | bash -s -- pre`).
 
 
 ## Usage
@@ -56,9 +59,12 @@ Yes, please! You're more than welcome :)
 
 MIT © [Bader Nasser Al-Hashmi](https://github.com/BaderSur)
 
+[servicing]: https://github.com/dotnet/core/blob/master/daily-builds-servicing.md
 
-[sdk]: https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-linux-x64.tar.gz
+[sdk]: https://dotnetcli.blob.core.windows.net/dotnet/Sdk/release/2.0.0/dotnet-sdk-latest-linux-x64.tar.gz
 
 [script]: https://github.com/dotnet/cli/blob/master/scripts/obtain/dotnet-install.sh
 
 [comment]: https://github.com/dotnet/cli/issues/7361#issuecomment-320956280
+
+[pre]: https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-linux-x64.tar.gz
